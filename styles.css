@@ -5,7 +5,7 @@
 
 body, head {
     display: flex;
-    background-color: #315840;
+    background-color: #151c25;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -13,7 +13,7 @@ body, head {
 
 .top-container {
     width: 50%;
-} 
+}
 
 .search-container {
     position: relative;
@@ -49,3 +49,33 @@ body, head {
     text-align: center;
     font-size: 16px;
   }
+  
+
+
+  #coin-container {
+    width: 200px;
+    height: 200px;
+}
+
+#rotate-container {
+  display: flex;
+  margin-top: 50px;
+  gap: 30px;
+}
+
+#rotate-container * {
+  border: none;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background-color: #283441;
+}
+  .coin {
+    width: 100px; /* Ширина иконки */
+    height: 100px; /* Высота иконки */
+    background-size: cover;
+    border-radius: 50%; /* Делает иконку круглой */
+    animation: spin 2s linear infinite; /* Анимация вращения */
+    background-color: #2f4052; /* Замените на URL вашей иконки */
+  
+}
