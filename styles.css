@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body, head {
+    display: flex;
+    background-color: #151c25;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.top-container {
+    width: 50%;
+} 
+
+.search-container {
+    position: relative;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    width: 100%;
+  }
+ 
+  .search-input {
+    width: 100%;
+    color: rgb(61, 121, 170);
+    outline: none;
+    padding: 10px 140px 10px 15px; /* Отступы для иконки и кнопки */
+    border: 2px solid #283441;
+    border-radius: 10px;
+    background-color: #283441;
+    font-size: 16px;
+  }
+
+
+  .search-button {
+    position: absolute;
+    top: 0;
+    right: 0; 
+    width: 25%;
+    background-color: #2f4052; 
+    color: rgb(61, 121, 170);
+    border: none;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+  }
