@@ -24,59 +24,78 @@
   <button id="generateGif">Создать GIF</button>
   <div id="result"></div> -->
   <div id="coin-container"></div>
+ 
+
   <div id="rotate-container">
     <button id="rotate-btn-x">X</button>
     <button id="rotate-btn-y">Y</button>
     <button id="rotate-btn-z">Z</button>
+    <button id="start-capture">➔</button>
   </div>
   </body>
  
 
+  <script src="
+  https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        const container = document.getElementById('coin-container');
+//         const container = document.getElementById('coin-container');
 
-// Создаем сцену
-const scene = new THREE.Scene();
+// // Создаем сцену
+// const scene = new THREE.Scene();
 
-// Создаем камеру
-const camera = new THREE.PerspectiveCamera(25, container.clientWidth / container.clientHeight, 0.1, 1000);
-camera.position.z = 5;
+// // Создаем камеру
+// const camera = new THREE.PerspectiveCamera(25, container.clientWidth / container.clientHeight, 0.1, 1000);
+// camera.position.z = 5;
 
-// Создаем рендерер и настраиваем его размер по размеру div-контейнера
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setSize(container.clientWidth, container.clientHeight);
+// // Создаем рендерер и настраиваем его размер по размеру div-контейнера
 
-// Вставляем канвас рендерера в div
-container.appendChild(renderer.domElement);
+// scene.background = null;
+// const renderer = new THREE.WebGLRenderer({ alpha: true,    premultipliedAlpha: true, preserveDrawingBuffer: true });
+// renderer.setClearColor(0x000000, 0);  // Устанавливаем прозрачный фон
 
-// Создаем геометрию монеты (цилиндр)
-const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
 
-// Загружаем текстуры для лицевой и оборотной стороны монеты
-const textureLoader = new THREE.TextureLoader();
-const frontTexture = textureLoader.load('telegram.png');
-const backTexture = textureLoader.load('telegram.png');
+// container.appendChild(renderer.domElement);
+// // Создаем геометрию монеты (цилиндр)
+// const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
 
-// Создаем материалы для лицевой и оборотной стороны
-const frontMaterial = new THREE.MeshStandardMaterial({ map: frontTexture });
-const backMaterial = new THREE.MeshStandardMaterial({ map: backTexture });
+// // Загружаем текстуры для лицевой и оборотной стороны монеты
+// const textureLoader = new THREE.TextureLoader();
+// const frontTexture = textureLoader.load('telegram.png');
+// const backTexture = textureLoader.load('telegram.png');
 
-// Создаем монету с использованием массива материалов
-const coin = new THREE.Mesh(geometry, [frontMaterial, backMaterial, frontMaterial]);
-coin.rotation.x = 1.5;
-coin.rotation.y = 1.6;
-scene.add(coin);
+// // Создаем материалы для лицевой и оборотной стороны
+// const frontMaterial = new THREE.MeshStandardMaterial({ map: frontTexture,  transparent: true,  depthWrite: false,  });
+// const backMaterial = new THREE.MeshStandardMaterial({ map: backTexture,  transparent: true,  depthWrite: false,  });
+//   // Задний фон черный, 100% непрозрачный
 
-// Добавляем освещение
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(1, 1, 16);
-scene.add(light);
+// // Создаем монету с использованием массива материалов
+// const coin = new THREE.Mesh(geometry, [frontMaterial, backMaterial, frontMaterial]);
+
+// // Устанавливаем масштаб монеты
+// coin.scale.set(0.5, 0.5, 0.5); 
+// scene.add(coin);
+
+// // Добавляем освещение
+// const light = new THREE.DirectionalLight(0xffffff, 1);
+// light.position.set(1, 1, 15);
+// scene.add(light);
+
 var rotateX = 1;
 var rotateY = 0;
 var rotateZ = 0;
-const rotateBtn = document.getElementById('rotate-btn');
+
+        let capturing = false;
+
+        document.getElementById('start-capture').addEventListener('click', () => {
+         if(!capturing) capturing = true;
+         else{
+          capturing = false;
+          gif.render();
+         }
+        });
+
 
 var colors = ["#283441", "#28bb6a", "#b82828"];
 document.getElementById('rotate-btn-x').addEventListener('click', () => {
@@ -113,11 +132,8 @@ document.getElementsByClassName('search-button')[0].addEventListener('click', ()
 
     // Загружаем новую текстуру из введенной ссылки
     textureLoader.load(imageUrl, (newTexture) => {
-        // Меняем текстуру у лицевой и оборотной стороны
         frontMaterial.map = newTexture;
         backMaterial.map = newTexture;
-
-        // Обновляем текстуру на объекте
         frontMaterial.needsUpdate = true;
         backMaterial.needsUpdate = true;
     }, undefined, (error) => {
@@ -125,20 +141,153 @@ document.getElementsByClassName('search-button')[0].addEventListener('click', ()
     });
 });
 
-function animate() {
-    requestAnimationFrame(animate);
+const container = document.getElementById('coin-container');
 
-    if (rotateX == 1)     coin.rotation.x += 0.01;
-    else if(rotateX == 2) coin.rotation.x -= 0.01;
-    if (rotateY == 1)     coin.rotation.y += 0.01;
-    else if(rotateY == 2) coin.rotation.y -= 0.01;
-    if (rotateZ == 1)     coin.rotation.z += 0.01;
-    else if(rotateZ == 2) coin.rotation.z -= 0.01;
+// Создаем сцену
+const scene = new THREE.Scene();
 
-    renderer.render(scene, camera);
+
+// Создаем камеру
+const camera = new THREE.PerspectiveCamera(25, 1, 0.1, 1000);
+camera.position.z = 2;
+
+// Создаем рендерер
+const renderer = new THREE.WebGLRenderer({ alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(200, 200)
+container.appendChild(renderer.domElement);
+
+// Создаем геометрию монеты
+const geometry = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 32);
+
+
+const textureLoader = new THREE.TextureLoader();
+const frontTexture = textureLoader.load('bg.png');
+const backTexture = textureLoader.load('telegram.png');
+
+// Создаем материалы для лицевой и оборотной стороны
+const frontMaterial = new THREE.MeshStandardMaterial({ map: frontTexture,  transparent: true,  depthWrite: false,  });
+const backMaterial = new THREE.MeshStandardMaterial({ map: backTexture,  transparent: true,  depthWrite: false,  });
+  // Задний фон черный, 100% непрозрачный
+
+// Создаем монету с использованием массива материалов
+ const coin = new THREE.Mesh(geometry, [frontMaterial, backMaterial, frontMaterial]);
+coin.rotation.x = -Math.PI / 2;
+coin.scale.set(0.5, 0.5, 0.5); 
+coin.rotation.x = 1.5;
+coin.rotation.y = 1.6;
+scene.add(coin);
+
+// Добавляем освещение
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(1, 1, 15);
+scene.add(light);
+
+// Анимация
+// function animate() {
+//     requestAnimationFrame(animate);
+//     coin.rotation.x += 0.02;
+//     renderer.setSize(container.clientWidth, container.clientHeight);
+//     renderer.render(scene, camera);
+//          if(capturing){
+//           html2canvas(container).then(canvas => {
+//                 capturer.capture(canvas); // Захват текущего снимка контейнера
+//             });
+//  }
+// }
+
+// Запускаем анимацию
+const gif = new GIF({
+    workers: 1,
+    quality: 100,
+    width: 200,
+    height: 200,
+    repeat: 0,
+    transparent: 0x000000 // Установите цвет для прозрачного фона
+});
+
+// Установка функции для захвата каждого кадра
+function captureGIF() {
+  html2canvas(container, { backgroundColor: null}).then(canvas => {
+    gif.addFrame(canvas, { delay: 1000/ 60});
+  });
 }
 
+var timeout = false;
+let rotationAngle = 0;
+let isRotating = true;
+
+// Запуск анимации
+function animate() {
+  requestAnimationFrame(animate);
+
+
+
+    // Рендерим сцену
+
+    
+    // Захватываем кадр
+    if(capturing){
+    //   if (rotateX == 1)     coin.rotation.x += 0.05;
+    // else if(rotateX == 2) coin.rotation.x -= 0.05;
+    // if (rotateY == 1)     coin.rotation.y += 0.05;
+    // else if(rotateY == 2) coin.rotation.y -= 0.05;
+    // if (rotateZ == 1)     coin.rotation.z += 0.05;
+    // else if(rotateZ == 2) coin.rotation.z -= 0.05;
+    if (isRotating) {
+        // Увеличиваем угол вращения
+        rotationAngle += 0.05; // Скорость вращения, можно изменять для плавности
+
+        // Ограничиваем вращение до 360 градусов (2 * Math.PI радиан)
+        if (rotationAngle >= 2 * Math.PI) {
+            rotationAngle = 0;
+            isRotating = false; 
+            capturing = false;
+            gif.render();// Останавливаем вращение после полного оборота
+        }
+
+        // Применяем вращение по оси Y (в зависимости от направления вращения)
+        coin.rotation.x = 1.5 + rotationAngle;
+        coin.rotation.y = 1.5 + rotationAngle;
+    }
+      renderer.render(scene, camera);
+      captureGIF();
+
+    }
+}
+
+// Начать анимацию
 animate();
+
+// После завершения анимации (например, через 2 секунды), сгенерировать GIF
+
+// Обработчик завершения рендеринга GIF
+gif.on('finished', function(blob) {
+    const url = URL.createObjectURL(blob);
+    const img = document.createElement('img');
+    img.src = url;
+    document.body.appendChild(img); // Добавление GIF на страницу
+});
+
+// function animate() {
+//     requestAnimationFrame(animate);
+
+//     renderer.render(scene, camera);
+
+//     //   html2canvas(container).then(canvas => {
+//     //     // Захватываем содержимое канваса
+
+//     // });
+//     if(capturing){
+//       capturer.capture(renderer.domElement);
+// }
+//       //
+//       // html2canvas(container).then(canvas => {
+//       //               capturer.capture(canvas); // Захватываем контейнер, а не рендерер
+//       //           });
+            
+// }
+
+
 
     </script>
 </body>

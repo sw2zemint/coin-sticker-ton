@@ -12,7 +12,7 @@ body, head {
 }
 
 .top-container {
-    width: 50%;
+    width: 75%;
 }
 
 .search-container {
@@ -51,25 +51,48 @@ body, head {
   }
   
 
-
   #coin-container {
     width: 200px;
     height: 200px;
+
+    position: relative;
+  background-image: url("bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
 
 #rotate-container {
-  display: flex;
-  margin-top: 50px;
+  position: fixed;  /* Зафиксировано относительно окна */
+  bottom: 0;        /* Привязка к нижней части экрана */
+  left: 10%;
+  right: 0;
+  display: flex;   /* Выровняем кнопки по горизонтали */
+  justify-content: center; /* Центрирование кнопок */ /* Прозрачный фон для видимости */
+  padding: 10px;    /* Отступы для красоты */
+  z-index: 1000;    /* Чтобы контейнер был поверх всех элементов */
   gap: 30px;
+  width: 75%;
+  padding-bottom: 20px;
 }
 
-#rotate-container * {
+
+#rotate-btn-x, #rotate-btn-y, #rotate-btn-z {
   border: none;
   border-radius: 50%;
   height: 30px;
   width: 30px;
   background-color: #283441;
 }
+
+#start-capture {
+  flex: 1;
+  background-color: #283441;
+  border: none;
+  border-radius: 5%;
+}
+
   .coin {
     width: 100px; /* Ширина иконки */
     height: 100px; /* Высота иконки */
