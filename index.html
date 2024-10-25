@@ -1,290 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ton Coin Stickers</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ton Coin Stickers</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
 
-    </head>
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> <!-- Используйте последнюю версию -->
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Используйте последнюю версию -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
- 
-  <div class="top-container">
-  <div class="search-container">
-    <input type="text" class="search-input" placeholder="Search..." />
-    <button class="search-button">➔</button>
-  </div>
+<!-- 
+  <div class="top-container" style="display: none;">
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search..." />
+     
+      </div>
+      <button class="search-button">➔</button>
+    </div>
+  </div> -->
+  <div class="custom-file-upload">
+    <label for="file-upload" id="upload-icon" class="upload-icon" style="display: none;">
+      <img src="https://cdn-icons-png.flaticon.com/512/10929/10929797.png" alt="Upload Icon" width="50" height="50">
+    </label>
+    <input type="file" id="file-upload" accept="image/*" style="display: none;">
+    </div>
+    
+
+    <p id="info"></p>
+    <div id="coin-container"></div>
+    <div id="rotate-container">
+      <div>
+        <div id="rotate-container-2">
+          <button id="rotate-btn-x">X</button>
+          <button id="rotate-btn-y">Y</button>
+          <button id="rotate-btn-z">Z</button>
+        </div>
+        <img id="settings-img" src="https://cdn-icons-png.flaticon.com/512/2040/2040504.png"></img>
+      </div>
+
+      <img id="start-capture" src="https://cdn-icons-png.flaticon.com/512/2285/2285485.png"></img>
+
+      <img id="textures-img" src="https://cdn-icons-png.flaticon.com/512/10929/10929797.png"></img>
+
 </div>
-  <div id="coin-container"></div>
- 
 
-  <div id="rotate-container">
-    <button id="rotate-btn-x">X</button>
-    <button id="rotate-btn-y">Y</button>
-    <button id="rotate-btn-z">Z</button>
-    <button id="start-capture">➔</button>
-  </div>
-  </body>
- 
+      <div id="sliding-menu" class="sliding-menu">
 
-  <script src="
+        <button id="container-image">Container background</button>
+        <button id="front-texture-image">Front texture</button>
+        <button id="side-texture-image">Side background</button>
+        <button id="back-texture-image">Back texture</button>
+
+      </div>
+</body>
+
+
+<script src="
   https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-//         const container = document.getElementById('coin-container');
 
-// // Создаем сцену
-// const scene = new THREE.Scene();
-
-// // Создаем камеру
-// const camera = new THREE.PerspectiveCamera(25, container.clientWidth / container.clientHeight, 0.1, 1000);
-// camera.position.z = 5;
-
-// // Создаем рендерер и настраиваем его размер по размеру div-контейнера
-
-// scene.background = null;
-// const renderer = new THREE.WebGLRenderer({ alpha: true,    premultipliedAlpha: true, preserveDrawingBuffer: true });
-// renderer.setClearColor(0x000000, 0);  // Устанавливаем прозрачный фон
-
-
-// container.appendChild(renderer.domElement);
-// // Создаем геометрию монеты (цилиндр)
-// const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
-
-// // Загружаем текстуры для лицевой и оборотной стороны монеты
-// const textureLoader = new THREE.TextureLoader();
-// const frontTexture = textureLoader.load('telegram.png');
-// const backTexture = textureLoader.load('telegram.png');
-
-// // Создаем материалы для лицевой и оборотной стороны
-// const frontMaterial = new THREE.MeshStandardMaterial({ map: frontTexture,  transparent: true,  depthWrite: false,  });
-// const backMaterial = new THREE.MeshStandardMaterial({ map: backTexture,  transparent: true,  depthWrite: false,  });
-//   // Задний фон черный, 100% непрозрачный
-
-// // Создаем монету с использованием массива материалов
-// const coin = new THREE.Mesh(geometry, [frontMaterial, backMaterial, frontMaterial]);
-
-// // Устанавливаем масштаб монеты
-// coin.scale.set(0.5, 0.5, 0.5); 
-// scene.add(coin);
-
-// // Добавляем освещение
-// const light = new THREE.DirectionalLight(0xffffff, 1);
-// light.position.set(1, 1, 15);
-// scene.add(light);
-
-var rotateX = 1;
-var rotateY = 0;
-var rotateZ = 0;
-
-        let capturing = false;
-
-        document.getElementById('start-capture').addEventListener('click', () => {
-         if(!capturing) capturing = true;
-         else{
-          capturing = false;
-          gif.render();
-         }
-        });
-
-
-var colors = ["#283441", "#28bb6a", "#b82828"];
-document.getElementById('rotate-btn-x').addEventListener('click', () => {
-    switch(rotateX){
-      case 0: rotateX = 1; break;
-      case 1: rotateX = 2; break;
-      case 2: rotateX = 0; break;
-    }
-    document.getElementById('rotate-btn-x').style.backgroundColor = colors[rotateX]; 
-});
-
-document.getElementById('rotate-btn-y').addEventListener('click', () => {
-    switch(rotateY){
-      case 0: rotateY = 1; break;
-      case 1: rotateY = 2; break;
-      case 2: rotateY = 0; break;
-    }
-    document.getElementById('rotate-btn-y').style.backgroundColor = colors[rotateY]; 
-});
-
-document.getElementById('rotate-btn-z').addEventListener('click', () => {
-       switch(rotateZ){
-      case 0: rotateZ = 1; break;
-      case 1: rotateZ = 2; break;
-      case 2: rotateZ = 0; break;
-    }
-    document.getElementById('rotate-btn-z').style.backgroundColor = colors[rotateZ]; 
-});
-
-
-
-document.getElementsByClassName('search-button')[0].addEventListener('click', () => {
-    const imageUrl = document.getElementsByClassName('search-input')[0].value;  // Берем ссылку из input
-
-    // Загружаем новую текстуру из введенной ссылки
-    textureLoader.load(imageUrl, (newTexture) => {
-        frontMaterial.map = newTexture;
-        backMaterial.map = newTexture;
-        frontMaterial.needsUpdate = true;
-        backMaterial.needsUpdate = true;
-    }, undefined, (error) => {
-        console.error('Ошибка при загрузке текстуры:', error);
-    });
-});
-
-const container = document.getElementById('coin-container');
-
-// Создаем сцену
-const scene = new THREE.Scene();
-
-
-// Создаем камеру
-const camera = new THREE.PerspectiveCamera(25, 1, 0.1, 1000);
-camera.position.z = 2;
-
-// Создаем рендерер
-const renderer = new THREE.WebGLRenderer({ alpha: true, preserveDrawingBuffer: true });
-renderer.setSize(200, 200)
-container.appendChild(renderer.domElement);
-
-// Создаем геометрию монеты
-const geometry = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 32);
-
-
-const textureLoader = new THREE.TextureLoader();
-const frontTexture = textureLoader.load('bg.png');
-const backTexture = textureLoader.load('telegram.png');
-
-// Создаем материалы для лицевой и оборотной стороны
-const frontMaterial = new THREE.MeshStandardMaterial({ map: frontTexture,  transparent: true,  depthWrite: false,  });
-const backMaterial = new THREE.MeshStandardMaterial({ map: backTexture,  transparent: true,  depthWrite: false,  });
-  // Задний фон черный, 100% непрозрачный
-
-// Создаем монету с использованием массива материалов
- const coin = new THREE.Mesh(geometry, [frontMaterial, backMaterial, frontMaterial]);
-coin.rotation.x = -Math.PI / 2;
-coin.scale.set(0.5, 0.5, 0.5); 
-coin.rotation.x = 1.5;
-coin.rotation.y = 1.6;
-scene.add(coin);
-
-// Добавляем освещение
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(1, 1, 15);
-scene.add(light);
-
-// Анимация
-// function animate() {
-//     requestAnimationFrame(animate);
-//     coin.rotation.x += 0.02;
-//     renderer.setSize(container.clientWidth, container.clientHeight);
-//     renderer.render(scene, camera);
-//          if(capturing){
-//           html2canvas(container).then(canvas => {
-//                 capturer.capture(canvas); // Захват текущего снимка контейнера
-//             });
-//  }
-// }
-
-// Запускаем анимацию
-const gif = new GIF({
-    workers: 1,
-    quality: 100,
-    repeat: 0,
-    transparent: 0x000000 // Установите цвет для прозрачного фона
-});
-
-// Установка функции для захвата каждого кадра
-function captureGIF() {
-  html2canvas(container, { backgroundColor: null}).then(canvas => {
-    gif.addFrame(canvas, { delay: 1000/ 60});
-  });
-}
-
-var timeout = false;
-let rotationAngle = 0;
-let isRotating = true;
-
-// Запуск анимации
-function animate() {
-  requestAnimationFrame(animate);
-
-
-
-    // Рендерим сцену
-
-    
-    // Захватываем кадр
-    if(capturing){
-    //   if (rotateX == 1)     coin.rotation.x += 0.05;
-    // else if(rotateX == 2) coin.rotation.x -= 0.05;
-    // if (rotateY == 1)     coin.rotation.y += 0.05;
-    // else if(rotateY == 2) coin.rotation.y -= 0.05;
-    // if (rotateZ == 1)     coin.rotation.z += 0.05;
-    // else if(rotateZ == 2) coin.rotation.z -= 0.05;
-    if (isRotating) {
-        // Увеличиваем угол вращения
-        rotationAngle += 0.05; // Скорость вращения, можно изменять для плавности
-
-        // Ограничиваем вращение до 360 градусов (2 * Math.PI радиан)
-        if (rotationAngle >= 2 * Math.PI) {
-            rotationAngle = 0;
-            isRotating = false; 
-            capturing = false;
-            gif.render();// Останавливаем вращение после полного оборота
-        }
-
-        // Применяем вращение по оси Y (в зависимости от направления вращения)
-        coin.rotation.x = 1.5 + rotationAngle;
-        coin.rotation.y = 1.5 + rotationAngle;
-    }
-      renderer.render(scene, camera);
-      captureGIF();
-
-    }
-}
-
-// Начать анимацию
-animate();
-
-// После завершения анимации (например, через 2 секунды), сгенерировать GIF
-
-// Обработчик завершения рендеринга GIF
-gif.on('finished', function(blob) {
-    const url = URL.createObjectURL(blob);
-    const img = document.createElement('img');
-    img.src = url;
-    img.style.width = "200px";
-    img.style.height = "200px";
-    document.body.appendChild(img); // Добавление GIF на страницу
-});
-
-// function animate() {
-//     requestAnimationFrame(animate);
-
-//     renderer.render(scene, camera);
-
-//     //   html2canvas(container).then(canvas => {
-//     //     // Захватываем содержимое канваса
-
-//     // });
-//     if(capturing){
-//       capturer.capture(renderer.domElement);
-// }
-//       //
-//       // html2canvas(container).then(canvas => {
-//       //               capturer.capture(canvas); // Захватываем контейнер, а не рендерер
-//       //           });
-            
-// }
-
-
-
-    </script>
+<script src="script.js"></script>
 </body>
+
 </html>

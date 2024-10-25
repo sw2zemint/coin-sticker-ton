@@ -1,44 +1,105 @@
 * {
-    margin: 0;
+    margin: 0; 
     box-sizing: border-box;
+} 
+
+ html, body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center;
+  flex-direction: column;
+  background-color: #162942; /* Цвет фона (по желанию) */
 }
 
-body, head {
-    display: flex;
-    background-color: #151c25;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+
+input[type="file"] {
+  display: none;
 }
 
-.top-container {
-    width: 75%;
+.custom-file-upload img {
+  width: 50px;
+  cursor: pointer;
+  padding: 8px;
+  height: 50px;
 }
 
-.search-container {
-    position: relative;
-    margin-bottom: 10px;
-    margin-top: 50px;
-    width: 100%;
-  }
- 
-  .search-input {
-    width: 100%;
-    color: rgb(61, 121, 170);
-    outline: none;
-    padding: 10px 140px 10px 15px; /* Отступы для иконки и кнопки */
-    border: 2px solid #283441;
-    border-radius: 10px;
-    background-color: #283441;
-    font-size: 16px;
-  }
+
+
+
+
+.sliding-menu {
+  position: fixed;
+  bottom: -50%; /* Hide the menu below the screen */
+  left: 10%;
+  width: 80%;
+  height: 30%; /* Adjust as needed */
+  background-color: #283441;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  transition: bottom 0.5s ease; /* Smooth transition */
+  z-index: 1000;
+  display: flex;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding:20px;
+
+  flex-direction: column;
+}
+
+.sliding-menu * {
+  height: 50px;
+  width: 100%;
+  background-color: #2a3d50;
+  margin-top: 10px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.sliding-menu.active {
+  bottom: 0; /* Show the menu */
+}
+
+
+
+.result-menu {
+  position: fixed;
+  bottom: -50%; /* Hide the menu below the screen */
+  left: 10%;
+  width: 80%;
+  height: 350px; /* Adjust as needed */
+  background-color: #283441;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  transition: bottom 0.5s ease; /* Smooth transition */
+  z-index: 1000;
+  display: flex;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding:20px;
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center;
+  flex-direction: column;
+}
+
+.result-menu img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.result-menu button {
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  background-color: #193b5f; 
+}
+.result-menu.active {
+  bottom: 0; /* Show the menu */
+}
 
 
   .search-button {
-    position: absolute;
-    top: 0;
-    right: 0; 
     width: 25%;
+    height: 50px;
     background-color: #2f4052; 
     color: rgb(61, 121, 170);
     border: none;
@@ -56,7 +117,6 @@ body, head {
     height: 200px;
 
     position: relative;
-  background-image: url("bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -66,32 +126,49 @@ body, head {
 #rotate-container {
   position: fixed;  /* Зафиксировано относительно окна */
   bottom: 0;        /* Привязка к нижней части экрана */
-  left: 10%;
-  right: 0;
+  left: 0;
   display: flex;   /* Выровняем кнопки по горизонтали */
-  justify-content: center; /* Центрирование кнопок */ /* Прозрачный фон для видимости */
-  padding: 10px;    /* Отступы для красоты */
-  z-index: 1000;    /* Чтобы контейнер был поверх всех элементов */
-  gap: 30px;
-  width: 75%;
-  padding-bottom: 20px;
+  justify-content: space-around; /* Центрирование кнопок */ /* Прозрачный фон для видимости */   /* Отступы для красоты */
+  z-index: 500;    /* Чтобы контейнер был поверх всех элементов */
+  width: 100%;
+  align-items: end;
+  background-color:#00000023;
+  height: 70px;
+  border-top-left-radius: 100px;
+  border-top-right-radius: 100px;
+  padding-bottom: 15px;
 }
 
+
+#rotate-container-2 {
+  display: flex;  
+  gap: 10px;
+  flex-direction: column;
+  visibility: hidden;
+}
+
+#rotate-container img{
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  height: 40px;
+  width: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+#rotate-container-2.active {
+  visibility: visible;
+}
 
 #rotate-btn-x, #rotate-btn-y, #rotate-btn-z {
   border: none;
-  border-radius: 50%;
-  height: 30px;
-  width: 30px;
+  border-radius: 5px;
+  height: 40px;
+  width: 40px;
   background-color: #283441;
 }
 
-#start-capture {
-  flex: 1;
-  background-color: #283441;
-  border: none;
-  border-radius: 5%;
-}
 
   .coin {
     width: 100px; /* Ширина иконки */
