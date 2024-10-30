@@ -24,16 +24,24 @@
       <button class="search-button">➔</button>
     </div>
   </div> -->
-  <div class="custom-file-upload">
+  <!-- <div class="custom-file-upload">
     <label for="file-upload" id="upload-icon" class="upload-icon" style="display: none;">
       <img src="https://cdn-icons-png.flaticon.com/512/10929/10929797.png" alt="Upload Icon" width="50" height="50">
     </label>
     <input type="file" id="file-upload" accept="image/*" style="display: none;">
+    </div> -->
+<!--     
+
+    <p id="info"></p> -->
+    <div class="grid">
+      <div class="tile" onclick="animate">Horizontal Rotating</div>
+      <div class="tile" onclick="openScene('rotate-y')">Vertical Rotating</div>
+      <div class="tile" onclick="openScene('rotate-xy')">Horizontal and Vertical Rotating</div>
+      <div class="tile" onclick="openScene('scale')">Scaling</div>
+      <div class="tile" onclick="openScene('position-y')">Moving UP</div>
     </div>
     
-
-    <p id="info"></p>
-    <div id="coin-container"></div>
+    <!-- <div id="coin-container"></div>
     <div id="rotate-container">
       <div>
         <div id="rotate-container-2">
@@ -46,24 +54,48 @@
 
       <img id="start-capture" src="https://cdn-icons-png.flaticon.com/512/2285/2285485.png"></img>
 
-      <img id="textures-img" src="https://cdn-icons-png.flaticon.com/512/10929/10929797.png"></img>
+      <img id="textures-img" src="https://cdn-icons-png.flaticon.com/512/10929/10929797.png"></img> -->
 
 </div>
-
+<!-- 
       <div id="sliding-menu" class="sliding-menu">
 
-        <button id="container-image">Container background</button>
-        <button id="front-texture-image">Front texture</button>
-        <button id="side-texture-image">Side background</button>
-        <button id="back-texture-image">Back texture</button>
 
       </div>
-      
-</body>
- 
+      <div id="sliding-menu-x" class="sliding-menu-x">
+        <div id="direction-container">
+          <button id="translate-right-btn" class="translate-btn">Right</button>
+          <button id="translate-left-btn" class="translate-btn">Left</button>
+          <button id="translate-top-btn" class="translate-btn">Top</button>
+          <button id="translate-bottom-btn" class="translate-btn">Bottom</button>
+          
+        </div>
+        <div id="direction-container">
 
-<script src="
-  https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+        <div id="x0v72wk">
+        <button id="container-image">Image</button>
+        <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+        </div>
+    
+          <div id="x0v72wk">
+            <button id="front-texture-image">Front</button>
+            <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+            </div>
+            <div id="x0v72wk">
+              <button id="side-texture-image">Side</button>
+              <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+              </div>
+            <div id="x0v72wk">
+              <button id="back-texture-image">Back</button>
+              <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+              </div>
+        </div>
+      <div id="direction-container"></div>
+        </div>
+
+  -->
+
+<script src="https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
