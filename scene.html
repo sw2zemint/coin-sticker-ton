@@ -5,15 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scene</title>
     <link rel="stylesheet" href="scene-styles.css">
- 
+    <script src="https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@latest"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.rawgit.com/kangax/gifuct.js/master/dist/gifuct.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.12.10/umd/ffmpeg.min.js"></script>
+
+
 <script  type="module" src="scene-script.js"></script>
 </head>
 <body>
-    <button id="menu-button" onclick="if(document.getElementById('main-menu').classList.contains('active')) document.getElementById('main-menu').classList.remove('active'); else document.getElementById('main-menu').classList.add('active'); ">Menu</button>
-    <div id="main-menu">
+    <div class="custom-file-upload">
+        <label for="file-upload" id="upload-icon" class="upload-icon" style="display: none;">
+          <img src="https://cdn-icons-png.flaticon.com/512/10929/10929797.png" alt="Upload Icon" width="50" height="50">
+        </label>
+        <input type="file" id="file-upload" accept="image/*" style="display: none;">
+        </div>
+        <!-- <input type="file" id="gif-input" accept=".gif">
+<button id="convert-button">Convert to WebM</button>
+<video id="video-output" controls></video> -->
+     <div id="main-menu">
         <div class="grid">
     
                 <!-- <div class="tile">Horizontal Rotating</div>
@@ -38,8 +52,83 @@
     </div>
     <!-- <p id="type-text"></p>
     <button id="back-button" onclick="window.history.back();">Назад</button> -->
+    <p id="timer"></p>
+    <!-- <button id="increase" class="button">+</button>
+    <button id="decrease" class="button">-</button>
+
+    <button id="rotation-x" class="button">x</button>
+    <button id="rotation-y" class="button">y</button>
+    <button id="rotation-z" class="button">z</button> -->
+
+    <div id="editor">
+      <div class="editor-container">
+        <div class="editor-item">
+          <button class="button-plus" data-action="x">+</button>
+          <button class="button-minus" data-action="x">-</button>
+        </div>
+        <button class="editor-tag">S</button>
+        </div>
+      <div class="editor-container">
+        <div class="editor-item">
+          <button class="button-plus" data-action="x">+</button>
+          <button class="button-minus" data-action="x">-</button>
+        </div>
+        <button class="editor-tag">L</button>
+        </div>
+      <div class="editor-container">
+        <div class="editor-item">
+          <button class="button-title">x</button>
+          <button class="button-plus" data-action="x">+</button>
+          <button class="button-minus" data-action="x">-</button>
+        </div>
+        <button class="editor-tag">P</button>
+      </div>
+      <div class="editor-container">
+        <div class="editor-item">
+          <button class="button-title">y</button>
+          <button class="button-plus" data-action="y">+</button>
+          <button class="button-minus" data-action="y">-</button>
+        </div>
+        <button class="editor-tag">R</button>
+      </div>
+      <div class="editor-container">
+        <div class="editor-item">
+          <button class="button-title">z</button>
+          <button class="button-plus" data-action="z">+</button>
+          <button class="button-minus" data-action="z">-</button>
+        </div>
+        <button class="editor-tag">S</button>
+      </div>
+    </div>
+    
     <div id="coin-container"></div>
-    <button id="record-button">Record</button>
+    <div id="textures-menu">
+        <div id="x0v72wk" style="display: none;">
+            <button id="container-image">Image</button>
+            <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+            </div>
+        
+              <div id="x0v72wk">
+                <button id="front-texture-image">Front</button>
+                <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+                </div>
+                <div id="x0v72wk">
+                  <button id="side-texture-image">Side</button>
+                  <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+                  </div>
+        <div id="x0v72wk">
+            <button id="back-texture-image">Back</button>
+            <img class="delete-icon" src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png">
+        </div>
+    </div>
+    <div id="bottom-nav">
+      <img id="textures-button" src="https://cdn-icons-png.flaticon.com/512/9261/9261193.png"  onclick="if(document.getElementById('textures-menu').classList.contains('active')) document.getElementById('textures-menu').classList.remove('active'); else document.getElementById('textures-menu').classList.add('active'); ">
+      <img id="record-button" src="https://cdn-icons-png.flaticon.com/512/1055/1055007.png">
+      <img id="menu-button" src="https://cdn-icons-png.flaticon.com/512/10486/10486773.png" onclick="if(document.getElementById('main-menu').classList.contains('active')) document.getElementById('main-menu').classList.remove('active'); else document.getElementById('main-menu').classList.add('active'); ">
+     
+      <!-- https://cdn-icons-png.flaticon.com/512/565/565665.png -->
+
+    </div>
     <div id="sliding-menu" class="sliding-menu"></div>
 
 </body>

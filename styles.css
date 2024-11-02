@@ -104,21 +104,7 @@ input[type="file"] {
   cursor: pointer;
 }
 
-#x0v72wk {
-  height: 35px;
-  width: 100%;
-  display: flex;
-  border-radius: 10px;
-  background-color: #862222;
-  align-items: center;
-}
 
-.delete-icon {
-  width: 30px;
-  height: 30px;
-  padding: 3px;
-  display: none;
-}
 
 .sliding-menu-x {
   position: fixed;

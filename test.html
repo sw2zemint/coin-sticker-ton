@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record PNG to WebM</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" height="200" style="display: none;"></canvas>
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn" disabled>Stop Recording</button>
+    <a id="downloadLink" style="display: none;">Download Video</a>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let mediaRecorder;
+        let recordedChunks = [];
+
+        // Загрузка и отрисовка PNG изображений
+        var images =[];
+        for(var i = 0; i < 60; i++) images.push(String(i).padStart(7, '0')+".png")
+
+        let currentIndex = 0;
+
+        function drawImage() {
+            const img = new Image();
+            img.src = "textures/"+images[currentIndex];
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                currentIndex = (currentIndex + 1) % images.length; // Циклически переключаем изображения
+            };
+        }
+
+        // Запуск записи
+        document.getElementById('startBtn').addEventListener('click', () => {
+            recordedChunks = [];
+            const stream = canvas.captureStream(30); // 30 FPS
+            mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = url;
+                downloadLink.download = 'recorded.webm';
+                downloadLink.style.display = 'block';
+                downloadLink.textContent = 'Download Video';
+            };
+
+            mediaRecorder.start();
+            document.getElementById('stopBtn').disabled = false;
+            drawImage(); // Начать рисовать изображения
+            const interval = setInterval(() => {
+                if (mediaRecorder.state === 'recording') {
+                    drawImage();
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1000 / 30); // 30 FPS
+        });
+
+        // Остановка записи
+        document.getElementById('stopBtn').addEventListener('click', () => {
+            mediaRecorder.stop();
+            document.getElementById('stopBtn').disabled = true;
+        });
+    </script>
+</body>
+</html>

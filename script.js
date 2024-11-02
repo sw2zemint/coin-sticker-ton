@@ -14,41 +14,7 @@ const tg = Telegram.WebApp;
 const user = tg.initDataUnsafe.user;
 // console.log(`User ID: ${user.id}, Username: ${user.username}`);
 
-    uploadInput.addEventListener('change', (event) => {
-        var file = event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                if (file.type === 'image/png' || file.type === 'image/jpeg') {
-                    var textureLoader = new THREE.TextureLoader();
-                    var texture = textureLoader.load(e.target.result, () => {
-                        // Устанавливаем текстуру в соответствующий материал
-                        document.getElementsByClassName("delete-icon")[uploadType].style.display = "block";
-                        if (uploadType == 0) {
-                            container.style.backgroundImage = `url(${e.target.result})`;
-                        } else if (uploadType == 1) {
-                            frontMaterial.map = texture; // Устанавливаем текстуру для фронтального материала
-                            frontMaterial.needsUpdate = true;
-                        } else if (uploadType == 2) {
-                            sideMaterial.map = texture; // Устанавливаем текстуру для бокового материала
-                            sideMaterial.needsUpdate = true;
-                        } else if (uploadType == 3) {
-                            backMaterial.map = texture; // Устанавливаем текстуру для заднего материала
-                            backMaterial.needsUpdate = true;
-                        }
-                    });
-                } else {
-                    alert('only PNG or JPG');
-                }
-                 uploadInput.value = '';
-            };
-            
-
-            reader.readAsDataURL(file);
-            
-        }
-    });
-
+    
     document.getElementsByClassName("delete-icon")[0].onclick = () => {
         document.getElementsByClassName("delete-icon")[0].style.display = "none";
         container.style.backgroundImage = 'none';
@@ -313,25 +279,6 @@ function openScene(type) {
     window.location.href = `scene.html?type=${encodeURIComponent(type)}`;
 } 
 
-document.getElementById('container-image').addEventListener('click', (event) => {
-    uploadInput.click();
-    uploadType  = 0;
-});
-
-document.getElementById('front-texture-image').addEventListener('click', (event) => {
-    uploadInput.click();
-    uploadType  = 1;
-});
-
-document.getElementById('side-texture-image').addEventListener('click', (event) => {
-    uploadInput.click();
-    uploadType  = 2;
-});
-
-document.getElementById('back-texture-image').addEventListener('click', (event) => {
-    uploadInput.click();
-    uploadType  = 3;
-});
 
 function startProgress() {
     const progressBar = document.getElementById('info');
